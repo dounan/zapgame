@@ -30,7 +30,8 @@ public class GameScreen extends BaseScreen {
     for (int i = 0; i < 100; i++) {
       float vx = -500 + MathUtils.random(1000);
       float vy = -500 + MathUtils.random(1000);
-      addBall(Ball.create(MathUtils.random(C.STAGE_W), MathUtils.random(C.STAGE_H), vx, vy));
+      int type = MathUtils.random(2) + 1;
+      addBall(Ball.create(MathUtils.random(C.STAGE_W), MathUtils.random(C.STAGE_H), vx, vy, type));
     }
   }
 

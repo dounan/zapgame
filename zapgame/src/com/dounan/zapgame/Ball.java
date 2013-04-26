@@ -9,22 +9,31 @@ import com.badlogic.gdx.utils.Pools;
 
 public class Ball extends Group implements Serializable {
 
-  public static Ball create(float x, float y, float vx, float vy) {
+  public static final int T1 = 1;
+  public static final int T2 = 2;
+  public static final int T3 = 3;
+
+  public static Ball create(float x, float y, float vx, float vy, int type) {
     Ball ball = Pools.obtain(Ball.class);
     ball.reset();
     ball.setPosition(x, y);
+    ball.setType(type);
     ball.setVelocity(vx, vy);
     return ball;
   }
 
   public float radiusSq;
+
+  private final Image img;
+
   private boolean flaggedForRemoval;
+  private int type;
   private float vx;
   private float vy;
 
   public Ball() {
     setTransform(false);
-    Image img = new Image(Assets.ball);
+    img = new Image(Assets.ball);
     img.setPosition(-img.getWidth() * .5f, -img.getHeight() * .5f);
     float r = img.getWidth() * .5f;
     radiusSq = r * r;
@@ -63,6 +72,25 @@ public class Ball extends Group implements Serializable {
 
   public void reset() {
     flaggedForRemoval = false;
+  }
+
+  public void setType(int type) {
+    this.type = type;
+    switch (type) {
+      case T1:
+        img.setColor(1, 0, 0, 1);
+        break;
+      case T2:
+        img.setColor(0, 1, 0, 1);
+        break;
+      case T3:
+        img.setColor(0, 0, 1, 1);
+        break;
+    }
+  }
+  
+  public int getType() {
+    return type;
   }
 
   public void setVelocity(float vx, float vy) {

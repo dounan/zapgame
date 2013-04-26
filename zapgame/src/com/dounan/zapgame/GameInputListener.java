@@ -7,9 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 
 public class GameInputListener extends ActorGestureListener {
 
-  private boolean pointer0Down;
-  private boolean pointer1Down;
-
   @Override
   public boolean handle(Event e) {
     boolean retVal = super.handle(e);
@@ -30,32 +27,27 @@ public class GameInputListener extends ActorGestureListener {
   @Override
   public void touchDown(InputEvent event, float x, float y, int pointer, int button) {
     if (pointer == 0) {
-      pointer0Down = true;
+      Zap.gameScreen.gameStage.zapper.setPointer0Down(true);
     } else if (pointer == 1) {
-      pointer1Down = true;
+      Zap.gameScreen.gameStage.zapper.setPointer1Down(true);
     }
-    Zap.gameScreen.gameStage.zapper.isZapping = pointer0Down && pointer1Down;
     touchDragged(x, y, pointer);
   }
 
   @Override
   public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
     if (pointer == 0) {
-      pointer0Down = false;
+      Zap.gameScreen.gameStage.zapper.setPointer0Down(false);
     } else if (pointer == 1) {
-      pointer1Down = false;
+      Zap.gameScreen.gameStage.zapper.setPointer1Down(false);
     }
-    Zap.gameScreen.gameStage.zapper.isZapping = pointer0Down && pointer1Down;
   }
 
   public void touchDragged(float x, float y, int pointer) {
-    Zapper zapper = Zap.gameScreen.gameStage.zapper;
     if (pointer == 0) {
-      zapper.pointer0.x = x;
-      zapper.pointer0.y = y;
+      Zap.gameScreen.gameStage.zapper.setPointer0Position(x, y);
     } else if (pointer == 1) {
-      zapper.pointer1.x = x;
-      zapper.pointer1.y = y;
+      Zap.gameScreen.gameStage.zapper.setPointer1Position(x, y);
     }
   }
 }
