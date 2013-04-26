@@ -6,6 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class Zap extends Game {
 
@@ -21,6 +24,15 @@ public class Zap extends Game {
 
   @Override
   public void create() {
+    // TODO: move to LoadingScreen
+    TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/zapgame.atlas"));
+    Assets.atlas = atlas;
+
+    FileHandle debugFontFile = Gdx.files.internal("data/debugempty.fnt");
+    Assets.debugFont = new BitmapFont(debugFontFile, atlas.createSprite("debugempty"), false);
+
+    Assets.ball = atlas.createSprite("ball");
+
     initInputProcessors();
     gameScreen = new GameScreen();
     setScreen(gameScreen);

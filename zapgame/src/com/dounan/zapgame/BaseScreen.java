@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.OrderedMap;
@@ -34,9 +35,11 @@ public class BaseScreen implements Screen, Serializable {
     float a = stage.getRoot().getColor().a;
     Gdx.gl.glClearColor(r * a, g * a, b * a, a);
     Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+    ScissorStack.pushScissors(scissor);
     stage.act(delta);
     beforeDraw(delta);
     stage.draw();
+    ScissorStack.popScissors();
   }
 
   @Override
@@ -45,14 +48,7 @@ public class BaseScreen implements Screen, Serializable {
     stage.getCamera().position.set(C.STAGE_W * .5f, C.STAGE_H * .5f, 0f);
 
     // Calculate scissor for the screen.
-    float ratio;
-    int horzDiff = width - C.STAGE_W;
-    int vertDiff = height - C.STAGE_H;
-    if (horzDiff < vertDiff) {
-      ratio = ((float) width) / C.STAGE_W;
-    } else {
-      ratio = ((float) height) / C.STAGE_H;
-    }
+    float ratio = Math.min(((float) width) / C.STAGE_W, ((float) height) / C.STAGE_H);
     float stageW = C.STAGE_W * ratio;
     float stageH = C.STAGE_H * ratio;
     float width2 = width * .5f;
