@@ -8,19 +8,19 @@ import com.badlogic.gdx.utils.Json.Serializable;
 
 public class GameStage extends Group implements Serializable {
 
-  private final Group gameContent;
   public final Zapper zapper;
+  private final Group gameContent;
   
   public GameStage() {
-    setTransform(false);
+    zapper = new Zapper();
     gameContent = new Group();
     gameContent.setTransform(false);
-    zapper = new Zapper();
     
     addGameContent(zapper);
     addActor(gameContent);
     setWidth(C.STAGE_W);
     setHeight(C.STAGE_H);
+    setTransform(false);
   }
   
   @Override

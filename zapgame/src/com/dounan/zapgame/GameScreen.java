@@ -14,6 +14,7 @@ public class GameScreen extends BaseScreen {
   public final GameStage gameStage;
 
   private final GameInputListener gameInputListener;
+  private final BallDropper ballDropper;
   private final Vector2 tmpBallPos;
 
   private Array<Ball> balls;
@@ -22,17 +23,10 @@ public class GameScreen extends BaseScreen {
     gameStage = new GameStage();
     gameInputListener = new GameInputListener();
     gameStage.addListener(gameInputListener);
+    ballDropper = new BallDropper();
     tmpBallPos = new Vector2();
     balls = new Array<Ball>();
     stage.addActor(gameStage);
-
-    // TODO(dounanshi): remove
-    for (int i = 0; i < 100; i++) {
-      float vx = -500 + MathUtils.random(1000);
-      float vy = -500 + MathUtils.random(1000);
-      int type = MathUtils.random(2) + 1;
-      addBall(Ball.create(MathUtils.random(C.STAGE_W), MathUtils.random(C.STAGE_H), vx, vy, type));
-    }
   }
 
   @Override
@@ -54,13 +48,15 @@ public class GameScreen extends BaseScreen {
 
   @Override
   public void render(float delta) {
-    // TODO Auto-generated method stub
     super.render(delta);
   }
 
   @Override
   protected void beforeDraw(float delta) {
     super.beforeDraw(delta);
+    
+    ballDropper.act(delta);
+    
     Iterator<Ball> ballIter = balls.iterator();
     while (ballIter.hasNext()) {
       Ball ball = ballIter.next();
