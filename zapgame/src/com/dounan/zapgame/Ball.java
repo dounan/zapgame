@@ -11,7 +11,7 @@ public class Ball extends Group implements Serializable {
 
   public static final int T1 = 1;
   public static final int T2 = 2;
-  public static final int T3 = 3;
+//  public static final int T3 = 3;
 
   public static Ball create(float x, float y, float vx, float vy, int type) {
     Ball ball = Pools.obtain(Ball.class);
@@ -83,9 +83,9 @@ public class Ball extends Group implements Serializable {
       case T2:
         img.setColor(0, 1, 0, 1);
         break;
-      case T3:
-        img.setColor(0, 0, 1, 1);
-        break;
+//      case T3:
+//        img.setColor(0, 0, 1, 1);
+//        break;
     }
   }
   
